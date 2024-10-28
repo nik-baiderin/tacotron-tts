@@ -94,7 +94,7 @@ class Synthesizer:
         else:
             sequence = self.text_handler.split_to_sentences(text, True, self.text_handler.language)
             sequence = [
-                ssml.Text(elem, pitch, rate, volume) if not isinstance(elem, ssml.Pause) else elem for elem in sequence
+                ssml.Text(elem, pitch, rate, volume) if not isinstance(elem, (ssml.Pause, ssml.Text)) else elem for elem in sequence
             ]
 
         sequence_generator = BackgroundGenerator(
@@ -107,7 +107,7 @@ class Synthesizer:
     def _sequence_to_sequence_gen(self, sequence, cleaners, mask_stress, mask_phonemes):
         print(f"Result: {sequence}")
         for element in sequence:
-            if not isinstance(element, ssml.Pause):
+            if not isinstance(element, (ssml.Pause, ssml.Text)):
                 sentence = element.value
 
                 sentence = self.text_handler.process(

@@ -192,7 +192,7 @@ class Handler(md.Processor):
         else:
             raise TypeError
 
-        self._out_data = {sentence: [] for sentence in sentences if not isinstance(sentence, Pause, Text)}
+        self._out_data = {sentence: [] for sentence in sentences if not isinstance(sentence (Pause, Text))}
 
         for sentence in sentences:
             if not isinstance(sentence, (Pause, Text)):
@@ -463,7 +463,7 @@ def _get_file(name, data_dir, verify_checksum, raise_exception):
 def _get_default_modules(charset, data_dir=None, verify_checksum=True, silent=False):
     modules = [
         # md.Lower(),
-        md.Cleaner(charset)
+        # md.Cleaner(charset)
     ]
 
     if charset == _types.Charset.ru:

@@ -48,13 +48,15 @@ class Processor:
 
         :return: str
         """
+        print("partss sentence", sentence)
         if self.max_unit_length is not None:
             parts = self.split_to_units(sentence, self.max_unit_length)
         else:
             parts = (sentence,)
-
+        print("partss", parts)
         parts = [self.process(part, **kwargs) for part in parts]
-
+        # print("partss", parts)
+        # print(" ".join(parts))
         return " ".join(parts)
 
 
@@ -136,7 +138,7 @@ class Processor:
             raise TypeError
 
         for sentence in sentences:
-            if not isinstance(sentence, Pause):
+            if not isinstance(sentence, (Pause, Text)):
                 processed = self(sentence, **kwargs)
                 yield processed
             elif keep_delimiters:
@@ -213,7 +215,7 @@ class Processor:
 
         parts_grouped = []
         for part in _parts_grouped:
-            if isinstance(part, Pause, Text) or self._calc_weight(part) <= max_unit_length:
+            if isinstance(part (Pause, Text)) or self._calc_weight(part) <= max_unit_length:
                 parts_grouped.append(part)
             else:
                 parts_grouped.extend(self.split_to_units(part, max_unit_length, keep_delimiter))
