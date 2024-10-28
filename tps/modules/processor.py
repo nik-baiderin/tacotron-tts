@@ -238,7 +238,7 @@ class Processor:
         """
         sentences = sent_tokenize(text, language)
         # tokens = [Text(elem, 1.2, 1.5, 1.1) if not isinstance(elem, Pause) else elem for elem in ["Привееееет"]]
-        # tokens = []
+        tokens = []
         if keep_delimiters:
             # for i in range(1, len(tokens)):
             #     tokens.insert(i * 2 - 1, Pause.eos())
