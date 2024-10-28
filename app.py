@@ -50,11 +50,11 @@ def synthesize():
     logging.info(f"Source text: {text}")
     # text = emphasizer.process_text(text)
 
-    text = normalize_russian(text)
-    logging.info(f"Normalized text: {text}")
-    text = accentizer.process_all(text)
-    #text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
-    logging.info(f"Stressed text: {text}")
+    # text = normalize_russian(text)
+    # logging.info(f"Normalized text: {text}")
+    # text = accentizer.process_all(text)
+    # #text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
+    # logging.info(f"Stressed text: {text}")
 
     model_type = "Ruslan"
 
