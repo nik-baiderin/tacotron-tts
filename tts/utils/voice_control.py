@@ -139,7 +139,7 @@ def stretch_wave(x, factor, phase_params):
     phase_adv = (2 * np.pi * hop * np.arange(0, stft_cols))/ nfft
     stft = np.concatenate((stft, np.zeros((1, stft_cols))), axis=0)
 
-    indices = np.floor(times).astype(np.int)
+    indices = np.floor(times).astype(int)
     alpha = np.expand_dims(times - np.floor(times), axis=1)
     mag = (1. - alpha) * np.absolute(stft[indices, :]) + alpha * np.absolute(stft[indices + 1, :])
 

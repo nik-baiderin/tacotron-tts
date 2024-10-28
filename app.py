@@ -50,11 +50,11 @@ def synthesize():
     logging.info(f"Source text: {text}")
     # text = emphasizer.process_text(text)
 
-    # text = normalize_russian(text)
-    # logging.info(f"Normalized text: {text}")
-    # text = accentizer.process_all(text)
-    # #text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
-    # logging.info(f"Stressed text: {text}")
+    text = normalize_russian(text)
+    logging.info(f"Normalized text: {text}")
+    text = accentizer.process_all(text)
+    #text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
+    logging.info(f"Stressed text: {text}")
 
     model_type = "Ruslan"
 
@@ -64,8 +64,8 @@ def synthesize():
 
     options = {
         "rate": float(request_json.get("rate", 1.0)),
-        "pitch": float(request_json.get("pitch", 1.0)),
-        "volume": float(request_json.get("volume", 0.0))
+        "pitch": float(request_json.get("pitch", 1.5)),
+        "volume": float(request_json.get("volume", 6))
     }
 
     response_code, results = FileHandler.get_synthesized_audio(text, model_type, **options)

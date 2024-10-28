@@ -237,15 +237,19 @@ class Processor:
         :return: list
         """
         sentences = sent_tokenize(text, language)
-        tokens = [Text(elem, 1.2, 1.5, 1.1) if not isinstance(elem, Pause) else elem for elem in ["Привееееет"]]
+        # tokens = [Text(elem, 1.2, 1.5, 1.1) if not isinstance(elem, Pause) else elem for elem in ["Привееееет"]]
         # tokens = []
         if keep_delimiters:
             # for i in range(1, len(tokens)):
             #     tokens.insert(i * 2 - 1, Pause.eos())
             for i, sentence in enumerate(sentences):
-                tokens.append(sentence)
+                
+                if sentence[-1] == "?" or sentence[-1] == "!":
+                    tokens.append(Text(sentence,pitch=1.0,rate=1.0))
+                else:
+                    tokens.append(sentence)
                 if i < len(sentences) - 1:
-                    tokens.append(Pause.comma())
+                    tokens.append(Pause.eos())
 
             # Второй цикл: добавляем Pause.paragraph() внутри каждого предложения
             final_tokens = []
