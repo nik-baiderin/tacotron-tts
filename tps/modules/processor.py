@@ -244,20 +244,31 @@ class Processor:
             #     tokens.insert(i * 2 - 1, Pause.eos())
             for i, sentence in enumerate(sentences):
                 
-                if sentence[-1] == "?" or sentence[-1] == "!":
-                    tokens.append(Text(sentence,pitch=1.0,rate=1.0))
-                else:
-                    tokens.append(sentence)
+                # # if sentence[-1] == "?" or sentence[-1] == "!":
+                # if sentence[-1] == "?":
+                #     Text(sentence, pitch=1.1, rate=0.95)
+                # elif sentence[-1] == "!":
+                #     Text(sentence, pitch=1.05, volume=8)
+                #     # tokens.append(Text(sentence,pitch=1.0,rate=1.0))
+                # else:
+                #     tokens.append(sentence)
                 if i < len(sentences) - 1:
-                    tokens.append(Pause.eos())
+                    if sentence[-1] == "?":
+                        tokens.append(Text(sentence, rate=0.9))
+                    elif sentence[-1] == "!":
+                        tokens.append(Text(sentence, volume=10, rate=1.2))
+                    else:
+                        tokens.append(Pause.eos())
+                else:        
+                    tokens.append(sentence)
 
-            # Второй цикл: добавляем Pause.paragraph() внутри каждого предложения
             final_tokens = []
             for item in tokens:
                 if isinstance(item, str):
                     sentence_tokens = item.split(",")
                     for j in range(1, len(sentence_tokens)):
-                        sentence_tokens.insert(j * 2 - 1, Pause.paragraph())
+                        final_tokens.extend(sentence_tokens)
+                        sentence_tokens.insert(j * 2 - 1, Pause.comma())
                     final_tokens.extend(sentence_tokens)
                 else:
                     final_tokens.append(item)
