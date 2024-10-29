@@ -8,13 +8,13 @@ from models import models, ALL_MODELS
 from file_handler import FileHandler
 from tps.content.ops import download, find   
 from tps.modules import Emphasizer
-# from russian import normalize_russian
+from russian import normalize_russian
 #from stressrnn import StressRNN
 import logging
-# from ruaccent import RUAccent
+from ruaccent import RUAccent
 
-# accentizer = RUAccent()
-# accentizer.load(omograph_model_size='turbo3.1', use_dictionary=True)
+accentizer = RUAccent()
+accentizer.load(omograph_model_size='turbo3.1', use_dictionary=True)
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -50,11 +50,11 @@ def synthesize():
     logging.info(f"Source text: {text}")
     # text = emphasizer.process_text(text)
 
-    # text = normalize_russian(text)
-    # logging.info(f"Normalized text: {text}")
-    # text = accentizer.process_all(text)
-    # #text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
-    # logging.info(f"Stressed text: {text}")
+    text = normalize_russian(text)
+    logging.info(f"Normalized text: {text}")
+    text = accentizer.process_all(text)
+    # text = stress_rnn.put_stress(text, stress_symbol='+', accuracy_threshold=0.75, replace_similar_symbols=True)
+    logging.info(f"Stressed text: {text}")
 
     model_type = "Ruslan"
 
@@ -63,9 +63,9 @@ def synthesize():
     
 
     options = {
-        "rate": float(request_json.get("rate", 1.5)),
+        "rate": float(request_json.get("rate", 1.1)),
         "pitch": float(request_json.get("pitch", 1.0)),
-        "volume": float(request_json.get("volume", 6))
+        "volume": float(request_json.get("volume", 0))
     }
 
     response_code, results = FileHandler.get_synthesized_audio(text, model_type, **options)
