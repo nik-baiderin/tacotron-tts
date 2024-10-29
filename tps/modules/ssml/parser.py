@@ -19,8 +19,8 @@ def parse_ssml_text(text):
                 optimized_seq[-1] += elem
             else:
                 optimized_seq.append(elem)
-        elif isinstance(elem, (Pause, Text)):
-            if isinstance(optimized_seq[-1], (Pause, Text)):
+        elif isinstance(elem, Pause):
+            if isinstance(optimized_seq[-1], Pause):
                 optimized_seq[-1] = max(optimized_seq[-1], elem, key=lambda pause: pause.milliseconds)
             else:
                 optimized_seq.append(elem)
