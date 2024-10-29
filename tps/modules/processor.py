@@ -15,7 +15,18 @@ char_map = OrderedDict({
     ": ": Pause.colon,
     "; ": Pause.semicolon,
     ", ": Pause.comma,
-    " ": Pause.space
+    " ": Pause.space,
+})
+
+sentence_chars_map = OrderedDict({
+    ".": Pause.eos,
+    "?": Pause.eos,
+    "!": Pause.eos,
+    ":": Pause.colon,
+    ";": Pause.semicolon,
+    ",": Pause.comma,
+    " ": Pause.space,
+    "\n": Pause.paragraph,
 })
 
 _spaced_punctuation = re.compile(r" [{}]".format("".join([char for char in char_map if char != " "])))
@@ -285,7 +296,10 @@ class Processor:
                         tokens.append(Text(sentence, volume=8, rate=1.2))
                     else:
                         tokens.append(Text(sentence))
-                    tokens.append(Pause.eos())
+                    if sentence[-1] in sentence_chars_map:
+                        tokens.append(sentence_chars_map[sentence[-1]]())
+                    else:
+                        tokens.append(Pause.eos())
                 else:
                     tokens.append(sentence)
 
