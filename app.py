@@ -8,7 +8,7 @@ from models import models, ALL_MODELS
 from file_handler import FileHandler
 from tps.content.ops import download, find   
 from tps.modules import Emphasizer
-from russian import normalize_russian
+from tts.utils.russian import normalize_russian
 #from stressrnn import StressRNN
 import logging
 from ruaccent import RUAccent
@@ -64,9 +64,9 @@ def synthesize():
     
 
     options = {
-        "rate": float(request_json.get("rate", 1.15)),
+        "rate": float(request_json.get("rate", 1.0)),
         "pitch": float(request_json.get("pitch", 1.0)),
-        "volume": float(request_json.get("volume", 6))
+        "volume": float(request_json.get("volume", 8))
     }
 
     response_code, results = FileHandler.get_synthesized_audio(text, model_type, **options)
