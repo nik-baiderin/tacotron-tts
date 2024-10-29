@@ -281,26 +281,25 @@ class Processor:
                 if i < len(sentences) - 1:
                     if sentence[-1] == "?":
                         tokens.append(Text(sentence, rate=0.9))
-                        tokens.append(Pause.eos())
                     elif sentence[-1] == "!":
                         tokens.append(Text(sentence, volume=8, rate=1.2))
-                        tokens.append(Pause.eos())
                     else:
                         tokens.append(Text(sentence))
-                        tokens.append(Pause.eos())
+                    tokens.append(Pause.eos())
                 else:
-                    tokens.append(Text(sentence))
+                    tokens.append(sentence)
 
             final_tokens = []
             for item in tokens:
-                if isinstance(item, Text):
-                    sentence_parts = item.text.split(",")
-                    for j, part in enumerate(sentence_parts):
-                        final_tokens.append(Text(part.strip()))
-                        if j < len(sentence_parts) - 1:
+                if isinstance(item, str):
+                    sentence_tokens = item.split(",")
+                    for j, part in enumerate(sentence_tokens):
+                        final_tokens.append(Text(part.strip()))  # Добавляем часть текста
+                        if j < len(sentence_tokens) - 1:        # Добавляем паузу, если не последняя часть
                             final_tokens.append(Pause.comma())
                 else:
                     final_tokens.append(item)
+
         else:
             tokens = sentences
         return tokens
