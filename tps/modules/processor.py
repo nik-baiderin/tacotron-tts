@@ -247,8 +247,14 @@ class Processor:
 
         :return: list
         """
-        sentences = sent_tokenize(text, language)
-        # tokens = [Text(elem, 1.2, 1.5, 1.1) if not isinstance(elem, Pause) else elem for elem in ["Привееееет"]]
+
+        def custom_sentence_tokenizer(text):
+            pattern = r'(?<=[.!?])\s+|\n{2,}|\n'
+            sentences = re.split(pattern, text)
+            return [sentence.strip() for sentence in sentences if sentence.strip()]
+
+        sentences = custom_sentence_tokenizer(text)
+        # sentences = sent_tokenize(text, language)
         tokens = []
         if keep_delimiters:
             # for i in range(1, len(tokens)):
@@ -308,8 +314,8 @@ class Processor:
                 if isinstance(item, str):
                     sentence_tokens = item.split(",")
                     for j, part in enumerate(sentence_tokens):
-                        final_tokens.append(Text(part.strip()))  # Добавляем часть текста
-                        if j < len(sentence_tokens) - 1:        # Добавляем паузу, если не последняя часть
+                        final_tokens.append(Text(part.strip()))
+                        if j < len(sentence_tokens) - 1:        
                             final_tokens.append(Pause.comma())
                 else:
                     final_tokens.append(item)
