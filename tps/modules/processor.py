@@ -242,16 +242,42 @@ class Processor:
         if keep_delimiters:
             # for i in range(1, len(tokens)):
             #     tokens.insert(i * 2 - 1, Pause.eos())
-            for i, sentence in enumerate(sentences):
+            # for i, sentence in enumerate(sentences):
                 
-                # # if sentence[-1] == "?" or sentence[-1] == "!":
-                # if sentence[-1] == "?":
-                #     Text(sentence, pitch=1.1, rate=0.95)
-                # elif sentence[-1] == "!":
-                #     Text(sentence, pitch=1.05, volume=8)
-                #     # tokens.append(Text(sentence,pitch=1.0,rate=1.0))
-                # else:
-                #     tokens.append(sentence)
+            #     # # if sentence[-1] == "?" or sentence[-1] == "!":
+            #     # if sentence[-1] == "?":
+            #     #     Text(sentence, pitch=1.1, rate=0.95)
+            #     # elif sentence[-1] == "!":
+            #     #     Text(sentence, pitch=1.05, volume=8)
+            #     #     # tokens.append(Text(sentence,pitch=1.0,rate=1.0))
+            #     # else:
+            #     #     tokens.append(sentence)
+            #     if i < len(sentences) - 1:
+            #         if sentence[-1] == "?":
+            #             tokens.append(Text(sentence, rate=0.9))
+            #             tokens.append(Pause.eos())
+            #         elif sentence[-1] == "!":
+            #             tokens.append(Text(sentence, volume=8, rate=1.2))
+            #             tokens.append(Pause.eos())
+            #         else:
+            #             tokens.append(Text(sentence))
+            #             tokens.append(Pause.eos())
+            #     else:        
+            #         tokens.append(sentence)
+
+            # final_tokens = []
+            # for item in tokens:
+            #     if isinstance(item, str):
+            #         sentence_tokens = item.split(",")
+            #         for j in range(1, len(sentence_tokens)):
+            #             # final_tokens.extend(sentence_tokens)
+            #             sentence_tokens.insert(j * 2 - 1, Pause.comma())
+            #         final_tokens.extend(sentence_tokens)
+            #     else:
+            #         final_tokens.append(item)
+            # tokens = final_tokens
+
+            for i, sentence in enumerate(sentences):
                 if i < len(sentences) - 1:
                     if sentence[-1] == "?":
                         tokens.append(Text(sentence, rate=0.9))
@@ -262,20 +288,19 @@ class Processor:
                     else:
                         tokens.append(Text(sentence))
                         tokens.append(Pause.eos())
-                else:        
-                    tokens.append(sentence)
+                else:
+                    tokens.append(Text(sentence))
 
             final_tokens = []
             for item in tokens:
-                if isinstance(item, str):
-                    sentence_tokens = item.split(",")
-                    for j in range(1, len(sentence_tokens)):
-                        # final_tokens.extend(sentence_tokens)
-                        sentence_tokens.insert(j * 2 - 1, Pause.comma())
-                    final_tokens.extend(sentence_tokens)
+                if isinstance(item, Text):
+                    sentence_parts = item.text.split(",")
+                    for j, part in enumerate(sentence_parts):
+                        final_tokens.append(Text(part.strip()))
+                        if j < len(sentence_parts) - 1:
+                            final_tokens.append(Pause.comma())
                 else:
                     final_tokens.append(item)
-            tokens = final_tokens
         else:
             tokens = sentences
         return tokens
