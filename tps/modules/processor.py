@@ -270,7 +270,7 @@ class Processor:
                 if isinstance(item, str):
                     sentence_tokens = item.split(",")
                     for j in range(1, len(sentence_tokens)):
-                        final_tokens.extend(sentence_tokens)
+                        # final_tokens.extend(sentence_tokens)
                         sentence_tokens.insert(j * 2 - 1, Pause.comma())
                     final_tokens.extend(sentence_tokens)
                 else:
