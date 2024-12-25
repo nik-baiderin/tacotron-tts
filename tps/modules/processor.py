@@ -295,12 +295,17 @@ class Processor:
             # tokens = final_tokens
 
             for i, sentence in enumerate(sentences):
-                if i < len(sentences) - 1:
+                if i < len(sentences):
+
+                    # print(f"? found {sentence}")
                     if sentence[-1] == "?":
-                        tokens.append(Text(sentence, rate=0.9))
+                        print(f"? found {sentence}")
+                        tokens.append(Text(sentence, volume=8, rate=0.9))
                     elif sentence[-1] == "!":
+                        print(f"! found {sentence}")
                         tokens.append(Text(sentence, volume=8, rate=1.2))
                     else:
+                        print(f". found {sentence}")
                         tokens.append(Text(sentence))
                     if sentence[-1] in sentence_chars_map:
                         tokens.append(sentence_chars_map[sentence[-1]]())

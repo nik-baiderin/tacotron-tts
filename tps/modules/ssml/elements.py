@@ -5,7 +5,7 @@ from typing import Union
 class Text:
     _valid_prosody = ["pitch", "rate", "volume"]
 
-    def __init__(self, text, pitch=1.0, rate=1.0, volume=1.0):
+    def __init__(self, text, pitch=1.0, rate=1.0, volume=6.0):
         self.value = text
 
         self.pitch = parse_pitch(pitch)
@@ -189,9 +189,9 @@ def parse_rate(value: Union[str, float, int]) -> float:
 _volume_map = {
     "silent": -math.inf,
     "x-soft": -12,
-    "soft": 6,
-    "medium": 0,
-    "loud": 6,
+    "soft": 4,
+    "medium": 6,
+    "loud": 8,
     "x-loud": 12
 }
 
